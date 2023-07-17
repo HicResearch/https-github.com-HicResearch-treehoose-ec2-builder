@@ -1,0 +1,29 @@
+
+
+name: BasicSetup
+description: this document bootstraps Ubuntu server
+schemaVersion: 1.0
+
+phases:
+    - name: build
+      steps:
+        - name: BasicSetup
+          action: ExecuteBash
+          inputs:
+            commands:
+                - |
+                  echo "Updating and Installing packages"
+                  apt-get -y -q update && apt-get -y -q upgrade
+                  apt-get -y -q install unzip jq fuse python3-pip
+                  curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
+                  unzip -q awscliv2.zip
+                  ./aws/install
+                - |
+                  echo "Installing & Configuring Cfn helper scripts"
+                  mkdir -p /opt/aws/
+                  pip3 install https://s3.amazonaws.com/cloudformation-examples/aws-cfn-bootstrap-py3-latest.tar.gz
+                  ln -s /usr/local/init/ubuntu/cfn-hup /etc/init.d/cfn-hup
+                - |
+                  echo "User setup"
+                  adduser --disabled-password --gecos "" ec2-user
+                  usermod -aG sudo ec2-user

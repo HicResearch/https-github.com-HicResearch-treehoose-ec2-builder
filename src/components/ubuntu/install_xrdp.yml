@@ -1,0 +1,19 @@
+
+
+name: InstallXrdp
+description: this document installs xrdp on Ubuntu
+schemaVersion: 1.0
+
+phases:
+    - name: build
+      steps:
+        - name: InstallXrdp
+          action: ExecuteBash
+          inputs:
+            commands:
+                - echo "Installing xRDP Server"
+                - apt-get install -y -q xrdp
+                - usermod -a -G ssl-cert xrdp
+                - usermod -a -G ssl-cert ec2-user
+                - chmod 666 /run/xrdp/xrdp.pid
+                - systemctl restart xrdp

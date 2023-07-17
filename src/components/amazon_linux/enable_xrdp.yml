@@ -1,0 +1,16 @@
+
+
+name: EnableXrdp
+description: this document installs xrdp on Amazon Linux 2
+schemaVersion: 1.0
+
+phases:
+    - name: build
+      steps:
+        - name: EnableXrdp
+          action: ExecuteBash
+          inputs:
+            commands:
+                - sudo openssl req -x509 -sha384 -newkey rsa:3072 -nodes -subj '/CN=localhost' -keyout /etc/xrdp/key.pem -out /etc/xrdp/cert.pem -days 365
+                - sudo systemctl enable xrdp
+                - sudo systemctl start xrdp

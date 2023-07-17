@@ -1,0 +1,22 @@
+
+
+name: InstallUbuntuMateDesktop
+description: this document installs Ubuntu Mate Desktop on Ubuntu server
+schemaVersion: 1.0
+
+phases:
+    - name: build
+      steps:
+        - name: InstallUbuntuMateDesktop
+          action: ExecuteBash
+          inputs:
+            commands:
+                - echo "Installing Mate Desktop"
+                - DEBIAN_FRONTEND=noninteractive apt-get install -y -q ubuntu-mate-desktop
+                - echo "Completed Installing Mate Desktop"
+                - gsettings set org.gnome.desktop.screensaver lock-enabled false
+                - gsettings set org.gnome.desktop.screensaver idle-activation-enabled false
+                - gsettings set org.mate.screensaver lock-enabled false
+                - gsettings set org.mate.screensaver idle-activation-enabled false
+                - echo "mate-session" > /home/ec2-user/.xsession
+                - echo "mate-session" > /home/ubuntu/.xsession
